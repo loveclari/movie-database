@@ -41,6 +41,10 @@ h1 {
   display: flex;
   padding-left: 100px;
 
+  .testimonial__quote {
+    border-left: 2px solid @backgroundColor;
+  }
+
   .testimonial__quote::before {
     content: open-quote;
     font-size: 2rem;
@@ -54,10 +58,6 @@ h1 {
     border: 1px solid white;
     text-align: center;
     margin-left: -15px;
-  }
-
-  .vertical__line {
-    border-left: 2px solid #ff5c35;
   }
 
   .small__circle::before {
