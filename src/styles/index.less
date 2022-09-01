@@ -1,0 +1,277 @@
+@import "./variables.less";
+
+body {
+  margin: 0;
+  font-family: "Roboto", "Montserrat", sans-serif;
+}
+
+.hidden {
+  display: none;
+}
+
+.exercise-header {
+  padding: 1rem 0;
+  text-align: center;
+  color: #fff;
+  background-color: #00a4bd;
+
+  a {
+    color: #fff;
+    background-color: @backgroundColor;
+    padding: 15px;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 16px;
+  }
+
+  a:hover {
+    background-color: #dadada;
+    color: @textDark;
+  }
+
+}
+
+h1 {
+  text-align: center;
+  font-family: @fontMontserrat;
+  color: @textDark;
+}
+
+.testimonial {
+  display: flex;
+  padding: calc(100px + 1.5625vw);
+
+  .testimonial__quote::before {
+    content: open-quote;
+    font-size: 2rem;
+    font-family: "Times New Roman", Times, serif;
+    position: absolute;
+    background-color: @backgroundColor;
+    color: #fff;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px solid white;
+    text-align: center;
+    margin-left: -15px;
+  }
+
+  .vertical__line {
+    border-left: 2px solid #ff5c35;
+  }
+
+  .small__circle::before {
+    content: "\002E";
+    font-size: 0.3rem;
+    color: #ff5c35;
+    position: absolute;
+    background-color: @backgroundColor;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    margin-left: -2.8px;
+  }
+
+  .quote {
+    padding: 50px 10px 50px 170px;
+    font-family: @fontRobotSlab;
+    font-size: 0.8rem;
+    color: @textDark;
+    font-weight: 300;
+    margin-right: -30px;
+    margin-top: 5px;
+    width: 50%;
+  }
+
+  p {
+    padding: 15px 0 0 15px;
+    font-size: 1rem;
+  }
+
+  span {
+    padding-left: 15px;
+    font-family: @fontMontserrat;
+    color: #474747;
+    font-size: 0.6rem;
+    font-weight: 700;
+  }
+
+  .button__side {
+    margin: auto auto auto 15px;
+
+    a {
+      margin: auto auto auto 15px;
+      text-align: left;
+      background-color: @buttonColor;
+      padding: 10px;
+      text-transform: uppercase;
+      font-size: 10px;
+      font-family: @fontMontserrat;
+      text-decoration: none;
+      font-weight: 700;
+      color: #fff;
+      word-wrap: unset;
+    }
+  }
+}
+
+.header-container {
+  display: flex;
+  gap: 100px;
+  padding: 30px 20px 60px 20px;
+  margin: 50px 50px 0 50px;
+  text-align: left;
+  border-top: @borderStyle;
+  border-left: @borderStyle;
+  border-right: @borderStyle;
+  border-bottom: 0;
+
+  .item-1 {
+    padding: 20px;
+  }
+
+  .item-2 {
+    padding: 20px;
+  }
+
+  .item-3 {
+    padding: 20px;
+  }
+
+  .multiselect1,
+  .multiselect2 {
+    position: absolute;
+  }
+
+  .multiselect2 {
+    left: 200px;
+  }
+
+  #selectBox1,
+  #selectBox2 {
+    position: relative;
+    text-transform: uppercase;
+
+    select {
+      font-family: @fontMontserrat;
+      color: @textDark;
+      font-weight: 700;
+      padding: 10px;
+      text-transform: uppercase;
+      background-color: @lightGray;
+      border-top: 0;
+      border-right: 0;
+      border-bottom: @borderStyle;
+      border-left: 0;
+    }
+  }
+
+  .selectBox select {
+    width: 100%;
+    font-weight: bold;
+  }
+
+  .overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  #checkboxes1,
+  #checkboxes2 {
+    display: none;
+    background-color: #fff;
+    border: 1px #dadada solid;
+    text-align: left;
+  }
+
+  #checkboxes1 label,
+  #checkboxes2 label {
+    display: block;
+    padding: 10px;
+    border-bottom: @borderStyle;
+
+    input {
+      margin-right: 14px;
+    }
+  }
+
+  #checkboxes1 label:hover,
+  #checkboxes2 label:hover {
+    background-color: #1e90ff;
+  }
+
+  .movie__search {
+    right: 80px;
+    position: absolute;
+    color: @textDark;
+    height: 100px;
+
+    input {
+      height: 30px;
+      text-align: left;
+      border-radius: 2px;
+    }
+
+    input[placeholder='&#xF002'] {
+      align-items: right;
+    }
+  }
+}
+
+
+#wrapper {
+  margin: 0 50px 50px 50px;
+  padding: 0 10px 0 10px;
+  border-top: 0;
+  border: 2px solid #e7e7e7;
+
+  ul {
+    display: grid;
+    gap: 20px;
+    padding-left: 0;
+    grid-template-columns: 1fr 1fr 1fr;
+    list-style: none;
+  }
+
+  p {
+    font-size: 12px;
+    font-weight: 700;
+    font-family: @fontMontserrat;
+    line-height: 0.7;
+  }
+
+  img {
+    width: 100%;
+    height: 700px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .testimonial {
+    display: block;
+    padding: 0px;
+
+    .quote {
+      width: 80%;
+      font-size: 1.2rem;
+      padding: 50px;
+    }
+
+    .button__side {
+
+      a {
+        margin: auto;
+        display: block;
+        width: 200px;
+        text-align: center;
+      }
+    }
+
+    span {
+      font-size: 0.9rem;
+    }
+  }
+}
