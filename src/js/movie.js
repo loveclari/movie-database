@@ -20,24 +20,7 @@ const getMovies = () => {
             const moviedatabase = data.media.map((object) => {
                 const genre = object.genre.join(", ");
 
-                let image = document.querySelector('#movie__image');
-
-                let brokenImage = "https://oops-i-dont-work.jpg/";
-
-                if (data.media[9].poster === brokenImage) {
-                    return brokenImage.replace(
-                        "https://images.moviesanywhere.com/127cba05ac878f599d31426050b4b47a/42b29b75-cdd3-4ea0-b148-6eaaba889c6b.jpg"
-                    );
-                }
-
-                // const backgroundImage = (newImage) => {
-
-                //     // image.style.backgroundImage = 'url(' + newImage + ')';
-
-                //     document.querySelector('#movie__image').style.backgroundImage = 'url(' + newImage + ')'
-
-                // }
-
+                data.media[9].poster = "https://images.moviesanywhere.com/127cba05ac878f599d31426050b4b47a/42b29b75-cdd3-4ea0-b148-6eaaba889c6b.jpg"
 
                 output += `  
                 <li><img class="responsive" src="${object.poster}">
@@ -48,12 +31,8 @@ const getMovies = () => {
                 
             });
 
-            
-
             document.getElementById("output").innerHTML = output;
 
-            // const values = data.media.map((object) => object.title);
-            // const genre = data.media.map((object) => object.genre);
         });
 
     
@@ -74,9 +53,7 @@ const selectGenre = () => {
         expanded = false;
     }
 
-    fetch(
-        "https://raw.githubusercontent.com/HubSpotWebTeam/CodeExercise/main/src/js/data/data.json"
-    )
+    fetch("https://raw.githubusercontent.com/HubSpotWebTeam/CodeExercise/main/src/js/data/data.json")
         .then((res) => res.json())
         .then((data) => {
 
@@ -87,9 +64,11 @@ const selectGenre = () => {
 
             const genre = data.media.map((object) => {
 
+                const genreSpace = object.genre.join(", ");
+
                 checkboxOptions += ` 
                     <label for="one">
-                    <input type="checkbox" id="one" />${object.genre}</label>
+                    <input type="checkbox" id="one" />${genreSpace}</label>
                     `;
 
             });
@@ -133,8 +112,6 @@ const selectYear = () => {
             let checkboxOptions = '';
             
             const genre = data.media.map((object) => {
-                
-                console.log(object.year)
 
                 checkboxOptions += ` 
                     <label for="two">
@@ -149,23 +126,6 @@ const selectYear = () => {
 selectBox2.addEventListener("mouseover", () => {
     selectYear();
 });
-
-
-selectBox1.addEventListener('click', (e)=> {
- checkboxes1.classList.toggle('hidden')
-  e.stopPropagation()
-})
-
-document.addEventListener('click', (e)=> {
-  if(e.target.closest('checkboxes1')) {
-    return checkboxes1.classList.add('hidden')
-  } 
-
-
-})
-
-
-
 
 
 
