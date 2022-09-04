@@ -25,9 +25,6 @@ const getMovieDataBase = async () => {
             "https://raw.githubusercontent.com/HubSpotWebTeam/CodeExercise/main/src/js/data/data.json"
         );
         data = await response.json();
-        // data[24].poster.replace(
-        //     "https://images.moviesanywhere.com/127cba05ac878f599d31426050b4b47a/42b29b75-cdd3-4ea0-b148-6eaaba889c6b.jpg"
-        // );
 
         data.media.sort((a, b) => {
             if (a.title < b.title) {
@@ -47,6 +44,7 @@ const getMovieDataBase = async () => {
             selectYear(data.media);
         });
         search(data.media);
+        selectType(data.media);
     } catch (error) {
         console.log(error);
     }
@@ -72,6 +70,7 @@ const getMovies = (posterList) => {
 ///////////// adding filtering API for movie selection based on title /////////
 
 let expanded = false;
+let genreNewList = [];
 
 const selectGenre = (genreList) => {
     if (!expanded) {
@@ -82,8 +81,6 @@ const selectGenre = (genreList) => {
         expanded = false;
     }
     let checkboxOptions = "";
-
-    let genreNewList = [];
 
     for (let i = 0; i < genreList.length; i++) {
         for (let j = 0; j < genreList[i].genre.length; j++) {
@@ -137,9 +134,46 @@ const selectYear = (yearsList) => {
     document.getElementById("checkboxes2").innerHTML = checkboxOptions;
 };
 
+///////////// adding filtering API for movie selection based on type/////////
+
+const selectType = (typeList) => {
+    let checkboxRadio = "";
+
+    // let movieList = [];
+
+    // let bookList = [];
+
+    // console.log(movieList);
+
+    const movieType = typeList.map((obj) => {
+        if (obj.type.includes("movie")) {
+        }
+        if (obj.type.includes("book")) {
+        }
+    });
+
+    checkboxRadio += `
+                <label for="movie">
+                <input name="typeofdata" type="radio" id="radiomovie" />Movie</label>
+                <label for="book">
+                <input name="typeofdata" type="radio" id="radiomovie" />Book</label>`;
+    document.getElementById("radio_movie").innerHTML = checkboxRadio;
+};
+
+const clearFilters = () => {
+    filterLink = "";
+
+    filterLink += `
+    <a href="" id="">clear filters</a>`;
+
+    document.getElementById("filter_link").innerHTML = filterLink;
+};
+
+clearFilters();
+
 ///////////// adding filtering API for movie selection based on search /////////
 
-checkboxes1.addEventListener("click", (event, posterList) => {
+checkboxes1.addEventListener("click", (event) => {
     const checkGenre = event.target.value;
 
     const uncheckedbox = document.querySelector("#selectBox1>select>option");
@@ -165,12 +199,6 @@ checkboxes1.addEventListener("click", (event, posterList) => {
     }
 
     uncheckedbox.innerHTML = counterHtml;
-
-    console.log(checkedbox);
-    const filterGenre = data.media.map((obj) => {
-        return obj.genre.includes(checkedbox);
-    });
-    console.log(filterGenre);
 });
 
 checkboxes2.addEventListener("click", () => {
@@ -201,10 +229,26 @@ checkboxes2.addEventListener("click", () => {
 
 const search = (posterList) => {
     searchBar.addEventListener("keyup", (event) => {
-        const seacrhTitle = event.target.value.toLowerCase();
+        const searchTitle = event.target.value.toLowerCase();
         const filterTitle = posterList.filter((obj) => {
-            obj.title.toLowerCase().includes(seacrhTitle);
+            obj.title.toLowerCase().includes(searchTitle);
         });
         getMovies(filterTitle);
     });
 };
+
+// const filterGenre = (event) => {
+//     const checkedboxone = document.querySelector(
+//         'input[type="checkbox"]:checked'
+//     );
+
+//     let checkedboxValue = checkedboxone.value;
+
+//     const selectedBox = event.target.checked;
+
+//     const filterGenre = data.media.filter((obj) => {
+//         return obj.genre.includes(selectedBox);
+//     });
+// };
+
+// filterGenre();
