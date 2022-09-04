@@ -5,10 +5,6 @@ body {
   font-family: "Roboto", "Montserrat", sans-serif;
 }
 
-.hidden {
-  display: none;
-}
-
 .exercise-header {
   padding: 1rem 0;
   text-align: center;
@@ -156,7 +152,7 @@ h1 {
       font-family: @fontMontserrat;
       color: @textDark;
       font-weight: 700;
-      padding: 10px;
+      padding: 7px 15px 7px 5px;
       text-transform: uppercase;
       background-color: @lightGray;
       border-top: 0;
@@ -185,6 +181,8 @@ h1 {
     background-color: #fff;
     border: 1px #dadada solid;
     text-align: left;
+    height: 233px;
+    overflow: auto;
   }
 
   #checkboxes1 label,
@@ -240,9 +238,10 @@ h1 {
     font-size: 0.9rem;
     font-weight: 700;
     font-family: @fontMontserrat;
-    line-height: 0.7;
+    line-height: 1;
   }
-  p:nth-child(3){
+
+  p:nth-child(3) {
     font-size: 0.8rem;
   }
 
@@ -252,7 +251,7 @@ h1 {
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 820px) {
   .testimonial {
     display: block;
     padding: 0px;
@@ -275,6 +274,23 @@ h1 {
 
     span {
       font-size: 0.9rem;
+    }
+  }
+
+  #wrapper {
+    margin: 0;
+
+    ul {
+      display: grid;
+      gap: 20px;
+      padding-left: 0;
+      grid-template-columns: 1fr 1fr;
+      list-style: none;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
     }
   }
 }

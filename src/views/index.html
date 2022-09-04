@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script> 
-
+  
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400" rel="stylesheet">
@@ -20,7 +19,7 @@
   </div>
   <header>
     <div class="testimonial">
-      <div class="quote">
+       <div class="quote">
               <div class="testimonial__quote" role="quote">
                   <p>
                       Gingerbread tart cupcake cake muffin cookie
@@ -47,18 +46,23 @@
           </select>
           <div class="overSelect"></div>
         </div>
-        <div id="checkboxes1" class="hidden">
+        <div id="checkboxes1">
         </div>
       </div>
       <div class="multiselect2">
         <div id="selectBox2">
           <select>
-            <option>Year</option>
+              <option>Year</option>
           </select>
           <div class="overSelect"></div>
         </div>
-        <div id="checkboxes2" class="hidden">
+        <div id="checkboxes2">
         </div>
+      </div>
+      <div id="searchBar">
+        <label for="search" class="movie__search">
+          <input id="search" type="text" placeholder=" Search by title &#xF002;" style="font-family:Arial, FontAwesome; padding-left: 10px" />
+       </label>
       </div>
     </form>
 </div>

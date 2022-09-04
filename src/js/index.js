@@ -2,45 +2,78 @@ console.log("App Ready");
 
 /////////// global varibales ////////
 
+let data = [];
+
+const output = document.getElementById("output");
+const searchBar = document.getElementById("search");
+console.log(searchBar);
+
 let selectBox1 = document.getElementById("selectBox1");
 let selectBox2 = document.getElementById("selectBox2");
 let checkboxes1 = document.getElementById("checkboxes1");
 let checkboxes2 = document.getElementById("checkboxes2");
 let select = document.getElementsByTagName("select");
+let movie = document.getElementById("output");
 const header = document.getElementById("header-container");
 const test = document.getElementById("test");
 
-const getMovies = () => {
-    // fetch('https://dog.ceo/api/breeds/image/random',
-    fetch(
-        "https://raw.githubusercontent.com/HubSpotWebTeam/CodeExercise/main/src/js/data/data.json"
-    )
-        .then((res) => res.json())
-        .then((data) => {
-            let output = ``;
+////////// load main API data into the page ////////
 
-            const moviedatabase = data.media.map((object) => {
-                const genre = object.genre.join(", ");
+const getMovieDataBase = async () => {
+    try {
+        const response = await fetch(
+            "https://raw.githubusercontent.com/HubSpotWebTeam/CodeExercise/main/src/js/data/data.json"
+        );
+        data = await response.json();
+        // data[24].poster.replace(
+        //     "https://images.moviesanywhere.com/127cba05ac878f599d31426050b4b47a/42b29b75-cdd3-4ea0-b148-6eaaba889c6b.jpg"
+        // );
 
-                data.media[9].poster =
-                    "https://images.moviesanywhere.com/127cba05ac878f599d31426050b4b47a/42b29b75-cdd3-4ea0-b148-6eaaba889c6b.jpg";
-
-                output += `  
-                <li><img class="responsive" src="${object.poster}">
-                <p> ${object.title} <span>(${object.year})</span></p>
-                <p> ${genre}</p>
-                </li>`;
-            });
-
-            document.getElementById("output").innerHTML = output;
+        data.media.sort((a, b) => {
+            if (a.title < b.title) {
+                return -1;
+            }
+            if (a.title > b.title) {
+                return 1;
+            }
+            return 0;
         });
+
+        getMovies(data.media);
+        selectBox1.addEventListener("mouseover", () => {
+            selectGenre(data.media);
+        });
+        selectBox2.addEventListener("mouseover", () => {
+            selectYear(data.media);
+        });
+        search(data.media);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-window.addEventListener("load", getMovies);
+getMovieDataBase();
+
+const getMovies = (posterList) => {
+    const moviedatabase = posterList.map((object) => {
+        const genre = object.genre.join(", ");
+
+        data.media[24].poster =
+            "https://images.moviesanywhere.com/127cba05ac878f599d31426050b4b47a/42b29b75-cdd3-4ea0-b148-6eaaba889c6b.jpg";
+
+        document.getElementById("output").innerHTML += `  
+        <li><img class="responsive" src="${object.poster}">
+        <p> ${object.title} <span>(${object.year})</span></p>
+        <p> ${genre}</p>
+        </li>`;
+    });
+};
+
+///////////// adding filtering API for movie selection based on title /////////
 
 let expanded = false;
 
-const selectGenre = () => {
+const selectGenre = (genreList) => {
     if (!expanded) {
         checkboxes1.style.display = "block";
         expanded = true;
@@ -48,48 +81,33 @@ const selectGenre = () => {
         checkboxes1.style.display = "none";
         expanded = false;
     }
+    let checkboxOptions = "";
 
-    fetch(
-        "https://raw.githubusercontent.com/HubSpotWebTeam/CodeExercise/main/src/js/data/data.json"
-    )
-        .then((res) => res.json())
-        .then((data) => {
-            let arr = data.media;
+    let genreNewList = [];
 
-            // console.log(arr)
-
-            let checkboxOptions = "";
-
-            const genre = data.media.map((object) => {
-                const genreSpace = object.genre.join(", ");
-
-                checkboxOptions += ` 
-                    <label for="one">
-                    <input type="checkbox" id="one" />${genreSpace}</label>
-                    `;
-            });
-
-            let chooseMovieGenre = [];
-
-            // looping through the data
-
-            for (let i = 0; i < data.length; i++) {
-                const genreSearched = `${data[i].media.genre.toLowerCase()}`;
-
-                if (genreSearched.includes(searchInput.value.toLowerCase())) {
-                    chooseMovieGenre.push(data[i]);
-                }
+    for (let i = 0; i < genreList.length; i++) {
+        for (let j = 0; j < genreList[i].genre.length; j++) {
+            if (genreNewList.indexOf(genreList[i].genre[j]) === -1) {
+                genreNewList.push(genreList[i].genre[j]);
             }
+        }
+    }
 
-            document.getElementById("checkboxes1").innerHTML = checkboxOptions;
-        });
+    let sortedGenre = genreNewList.sort();
+
+    const genre = sortedGenre.map((genre) => {
+        checkboxOptions += ` 
+                <label for="one">
+                <input id="checkbox" type="checkbox" />${genre}</label>
+                `;
+
+        document.getElementById("checkboxes1").innerHTML = checkboxOptions;
+    });
 };
 
-selectBox1.addEventListener("mouseover", () => {
-    selectGenre();
-});
+///////////// adding filtering API for movie selection based on year /////////
 
-const selectYear = () => {
+const selectYear = (yearsList) => {
     if (!expanded) {
         checkboxes2.style.display = "block";
         expanded = true;
@@ -98,88 +116,95 @@ const selectYear = () => {
         expanded = false;
     }
 
-    fetch(
-        "https://raw.githubusercontent.com/HubSpotWebTeam/CodeExercise/main/src/js/data/data.json"
-    )
-        .then((res) => res.json())
-        .then((data) => {
-            let checkboxOptions = "";
+    let checkboxOptions = "";
 
-            const genre = data.media.map((object) => {
-                checkboxOptions += ` 
+    let yearList = [];
+
+    for (let i = 0; i < yearsList.length; i++) {
+        if (yearList.indexOf(yearsList[i].year) === -1) {
+            yearList.push(yearsList[i].year);
+        }
+    }
+
+    let sortedYear = yearList.sort().reverse();
+
+    const year = sortedYear.map((year) => {
+        checkboxOptions += ` 
                     <label for="two">
-                    <input type="checkbox" id="checkbox" />${object.year}</label>
+                    <input type="checkbox" id="checkbox" />${year}</label>
                     `;
-            });
-            document.getElementById("checkboxes2").innerHTML = checkboxOptions;
-        });
+    });
+    document.getElementById("checkboxes2").innerHTML = checkboxOptions;
 };
 
-selectBox2.addEventListener("mouseover", () => {
-    selectYear();
+///////////// adding filtering API for movie selection based on search /////////
+
+checkboxes1.addEventListener("click", (event, posterList) => {
+    const checkGenre = event.target.value;
+
+    const uncheckedbox = document.querySelector("#selectBox1>select>option");
+
+    counterHtml = "";
+
+    const checkedbox = document.querySelectorAll(
+        'input[type="checkbox"]:checked'
+    );
+
+    if (checkedbox.length < 2 && checkedbox.length > 0) {
+        counterHtml += `<span>${
+            document.querySelectorAll('input[type="checkbox"]:checked').length
+        }  <span><option>Genre</option>`;
+    }
+
+    if (checkedbox.length >= 2) {
+        counterHtml += `<span>${
+            document.querySelectorAll('input[type="checkbox"]:checked').length
+        }  <span><option>Genres</option>`;
+    } else if (checkedbox.length <= 0) {
+        counterHtml += `<option>Genre</option>`;
+    }
+
+    uncheckedbox.innerHTML = counterHtml;
+
+    console.log(checkedbox);
+    const filterGenre = data.media.map((obj) => {
+        return obj.genre.includes(checkedbox);
+    });
+    console.log(filterGenre);
 });
 
-//////  dynamic search
+checkboxes2.addEventListener("click", () => {
+    const uncheckedbox = document.querySelector("#selectBox2>select>option");
 
-const showSearch = () => {
-    let html = document.createElement("div");
+    counterHtml = "";
 
-    html.innerHTML = `
-       <label for="search" class="movie__search">
-          <input id="search" type="text" placeholder=" Search by title &#xF002;" style="font-family:Arial, FontAwesome; padding-left: 10px" />
-       </label>`;
-    header.appendChild(html);
+    const checkedbox = document.querySelectorAll(
+        'input[type="checkbox"]:checked'
+    );
 
-    fetch(
-        "https://raw.githubusercontent.com/HubSpotWebTeam/CodeExercise/main/src/js/data/data.json"
-    )
-        .then((res) => res.json())
-        .then((data) => {
-            const list = data.media;
+    if (checkedbox.length < 2 && checkedbox.length > 0) {
+        counterHtml += `<span>${
+            document.querySelectorAll('input[type="checkbox"]:checked').length
+        }  <span><option>Year</option>`;
+    }
 
-            const performSearch = (searchInput, list) => {
-                // creates a new array with searched names
+    if (checkedbox.length >= 2) {
+        counterHtml += `<span>${
+            document.querySelectorAll('input[type="checkbox"]:checked').length
+        }  <span><option>Years</option>`;
+    } else if (checkedbox.length <= 0) {
+        counterHtml += `<option>Year</option>`;
+    }
 
-                let searchedMovieList = [];
+    uncheckedbox.innerHTML = counterHtml;
+});
 
-                // looping through the data
-
-                for (let i = 0; i < list.length; i++) {
-                    const titlesSearched = `${list[
-                        i
-                    ].title.toLowerCase()} ${list[i].title.toLowerCase()}`;
-
-                    if (
-                        titlesSearched.includes(searchInput.value.toLowerCase())
-                    ) {
-                        searchedMovieList.push(data[i]);
-                    }
-
-                    console.log(searchedMovieList);
-                }
-            };
-
-            getMovies(performSearch);
+const search = (posterList) => {
+    searchBar.addEventListener("keyup", (event) => {
+        const seacrhTitle = event.target.value.toLowerCase();
+        const filterTitle = posterList.filter((obj) => {
+            obj.title.toLowerCase().includes(seacrhTitle);
         });
-
-    // adding the pages and pagination numbers congruent with data
+        getMovies(filterTitle);
+    });
 };
-
-// Call functions
-showSearch();
-
-// event variables initializers
-
-const search = document.querySelector("#search");
-
-// event listeners for search and returning specific data
-
-search.addEventListener("submit", (event) => {
-    event.preventDefault();
-    performSearch(search, data);
-});
-
-// submit listener
-search.addEventListener("keyup", () => {
-    performSearch(search, data);
-});
