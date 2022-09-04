@@ -16,6 +16,7 @@ let select = document.getElementsByTagName("select");
 let movie = document.getElementById("output");
 const header = document.getElementById("header-container");
 const test = document.getElementById("test");
+const filterLink = document.getElementById("clear");
 
 ////////// load main API data into the page ////////
 
@@ -154,19 +155,27 @@ const selectType = (typeList) => {
 
     checkboxRadio += `
                 <label for="movie">
-                <input name="typeofdata" type="radio" id="radiomovie" />Movie</label>
+                <input name="typeofdata" type="radio" id="radiomovie" />Movies</label>
                 <label for="book">
-                <input name="typeofdata" type="radio" id="radiomovie" />Book</label>`;
+                <input name="typeofdata" type="radio" id="radiomovie" />Books</label>`;
     document.getElementById("radio_movie").innerHTML = checkboxRadio;
 };
 
+const filterLinks = () => {
+    const elements = document.getElementsByTagName("input");
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].value = "";
+    }
+};
+
+filterLinks();
+
 const clearFilters = () => {
-    filterLink = "";
+    link = "";
+    link += `
+    <a id="clear" onClick="filterLinks()">clear filters</a>`;
 
-    filterLink += `
-    <a href="" id="">clear filters</a>`;
-
-    document.getElementById("filter_link").innerHTML = filterLink;
+    document.getElementById("filter_link").innerHTML = link;
 };
 
 clearFilters();
@@ -233,7 +242,13 @@ const search = (posterList) => {
         const filterTitle = posterList.filter((obj) => {
             obj.title.toLowerCase().includes(searchTitle);
         });
-        getMovies(filterTitle);
+        posterList.map((obj) => {
+            document.getElementById("output").innerHTML += `  
+        <li><img class="responsive" src="${filterTitle.poster}">
+        <p> ${filterTitle.title} <span>(${filterTitle.year})</span></p>
+        <p> ${filterTitle.genre}</p>
+        </li>`;
+        });
     });
 };
 

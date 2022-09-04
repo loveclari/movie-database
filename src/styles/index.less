@@ -214,26 +214,38 @@ h1 {
     }
   }
 
-  .movie__search {
+  #searchBar {
     grid-area: b;
-    right: 80px;
-    position: absolute;
-    color: @textDark;
-    height: 100px;
+    justify-self: end;
 
-    input {
-      height: 30px;
-      text-align: left;
-      border-radius: 2px;
-    }
+    .movie__search {
+      right: 80px;
+      position: absolute;
+      color: @textDark;
+      height: 100px;
 
-    input[placeholder='&#xF002'] {
-      align-items: right;
+      input {
+        height: 30px;
+        text-align: left;
+        border-radius: 2px;
+      }
+
+      input[placeholder='&#xF002'] {
+        align-items: right;
+      }
     }
   }
 
   #radio_movie {
     grid-area: c;
+    font-family: @fontMontserrat;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: @textDark;
+
+    input {
+      margin-right: 7px;
+    }
   }
 
   #filter_link {
@@ -287,9 +299,37 @@ h1 {
 
 @media only screen and (max-width: 820px) {
   .header-container {
-    display: block;
+    grid-template-columns: 1fr 1fr;
     margin: 20px 20px 0 20px;
+    padding: 20px 15px;
+    gap: 0;
+
+    #allcheckboxes {
+      padding-bottom: 15px;
+
+      .multiselect1,
+      .multiselect2 {
+        position: static;
+      }
+
+      .multiselect1 {
+        padding-bottom: 20px;
+      }
+    }
+
+    #searchBar {
+      .movie__search {
+        position: relative;
+        right: 0;
+      }
+
+    }
+
+
   }
+
+
+
 
   .testimonial {
     display: block;
