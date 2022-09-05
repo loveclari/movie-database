@@ -72,7 +72,7 @@ const display = (data) => {
     const htmlString = data
         .map((object) => {
             return `
-        <li><img class="responsive" src="${object.poster}">
+        <li><img class="responsive" src="${object.poster}" alt="image from source">
         <p> ${object.title} <span>(${object.year})</span></p>
         <p> ${object.genre}</p>
         </li>`;
