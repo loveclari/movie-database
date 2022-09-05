@@ -233,9 +233,13 @@ checkboxes2.addEventListener("click", () => {
 
 ///////////// adding a serach feature by title /////////
 
+searchBar.addEventListener("mouseenter", () => {
+    document.getElementById("search").placeholder = "Search by title";
+});
+
 const search = (posterList) => {
     searchBar.addEventListener("keyup", (event) => {
-        document.getElementById("search").placeholder = "Type name here..";
+        document.getElementById("search").placeholder = "Search by title";
         const searchTitle = event.target.value.toLowerCase();
         const filterTitle = posterList.filter((obj) => {
             obj.title.toLowerCase().includes(searchTitle);
