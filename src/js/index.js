@@ -12,12 +12,13 @@ let selectBox2 = document.getElementById("selectBox2");
 let checkboxes1 = document.getElementById("checkboxes1");
 let checkboxes2 = document.getElementById("checkboxes2");
 let select = document.getElementsByTagName("select");
-let movie = document.getElementById("output");
+const movie = document.getElementById("output");
 const header = document.getElementById("header-container");
 const test = document.getElementById("test");
 const filterLink = document.getElementById("clear");
+const radioMovie = document.getElementById("radio_movie");
 
-////////// load main API data into the page ////////
+////////// fetch API data into the page ////////
 
 const getMovieDataBase = async () => {
     try {
@@ -36,7 +37,9 @@ const getMovieDataBase = async () => {
             return 0;
         });
 
+        // getMovies(data.media);
         getMovies(data.media);
+        display(data.media);
         selectBox1.addEventListener("mouseover", () => {
             selectGenre(data.media);
         });
@@ -44,6 +47,7 @@ const getMovieDataBase = async () => {
             selectYear(data.media);
         });
         filterGenre(data.media);
+        filterYear(data.media);
         search(data.media);
         selectType(data.media);
     } catch (error) {
@@ -51,24 +55,48 @@ const getMovieDataBase = async () => {
     }
 };
 
-getMovieDataBase();
+///////////// fixing poster broken link /////////
 
 const getMovies = (posterList) => {
     const moviedatabase = posterList.map((object) => {
         const genre = object.genre.join(", ");
-
         data.media[24].poster =
             "https://images.moviesanywhere.com/127cba05ac878f599d31426050b4b47a/42b29b75-cdd3-4ea0-b148-6eaaba889c6b.jpg";
-
-        document.getElementById("output").innerHTML += `  
-        <li><img class="responsive" src="${object.poster}">
-        <p> ${object.title} <span>(${object.year})</span></p>
-        <p> ${genre}</p>
-        </li>`;
     });
 };
 
-///////////// adding filtering API for movie selection based on title /////////
+///////////// displaying API database as a list /////////
+
+const display = (data) => {
+    const htmlString = data
+        .map((object) => {
+            return `
+        <li><img class="responsive" src="${object.poster}">
+        <p> ${object.title} <span>(${object.year})</span></p>
+        <p> ${object.genre}</p>
+        </li>`;
+        })
+        .join("");
+    output.innerHTML = htmlString;
+};
+
+///////////// adding a search feature by title /////////
+
+searchBar.addEventListener("mouseenter", () => {
+    document.getElementById("search").placeholder = "Search by title";
+});
+
+const search = (data) => {
+    searchBar.addEventListener("keyup", (event) => {
+        const searchTitle = event.target.value.toLowerCase();
+        const filterTitle = data.filter((obj) => {
+            return obj.title.toLowerCase().includes(searchTitle);
+        });
+        display(filterTitle);
+    });
+};
+
+///////////// displaying API for movie genre type /////////
 
 let expanded = false;
 let genreNewList = [];
@@ -137,28 +165,31 @@ const selectYear = (yearsList) => {
 
 ///////////// adding filtering API for movie selection based on type/////////
 
-const selectType = (typeList) => {
+const displayDataType = () => {
     let checkboxRadio = "";
 
-    // let movieList = [];
-
-    // let bookList = [];
-
-    // console.log(movieList);
-
-    const movieType = typeList.map((obj) => {
-        if (obj.type.includes("movie")) {
-        }
-        if (obj.type.includes("book")) {
-        }
-    });
-
     checkboxRadio += `
-                <label for="movie">
-                <input name="movie" type="radio" id="radiomovie" />Movies</label>
-                <label for="book">
-                <input name="book" type="radio" id="radiomovie" />Books</label>`;
+    <label for="movie">
+    <input name="movie" type="radio" id="radiomovie" />Movies</label>
+    <label for="book">
+    <input name="book" type="radio" id="radiomovie" />Books</label>`;
     document.getElementById("radio_movie").innerHTML = checkboxRadio;
+};
+
+const selectType = (typeList) => {
+    radioMovie.addEventListener("click", (event) => {
+        const searchType = event.target.checked;
+
+        const movieType = typeList.filter((obj) => {
+            if (searchType == "movies") {
+                return obj.type.includes("movie");
+            }
+            if (searchType == "books") {
+                return obj.type.includes("book");
+            }
+        });
+        display(movieType);
+    });
 };
 
 ///////////// adding filtering API for movie clear filters and reset page /////////
@@ -170,8 +201,6 @@ const clearFilters = () => {
 
     document.getElementById("filter_link").innerHTML = link;
 };
-
-clearFilters();
 
 ///////////// adding counting of checked genre items /////////
 
@@ -231,36 +260,39 @@ checkboxes2.addEventListener("click", () => {
     uncheckedbox.innerHTML = counterHtml;
 });
 
-///////////// adding a serach feature by title /////////
-
-searchBar.addEventListener("mouseenter", () => {
-    document.getElementById("search").placeholder = "Search by title";
-});
-
-const search = (posterList) => {
-    searchBar.addEventListener("keyup", (event) => {
-        document.getElementById("search").placeholder = "Search by title";
-        const searchTitle = event.target.value.toLowerCase();
-        const filterTitle = posterList.filter((obj) => {
-            obj.title.toLowerCase().includes(searchTitle);
-            //     document.getElementById("output").innerHTML += `
-            // <li><img class="responsive" src="${filterTitle.poster}">
-            // <p> ${filterTitle.title} <span>(${filterTitle.year})</span></p>
-            // <p> ${filterTitle.genre}</p>
-            // </li>`;
-        });
-        getMovies(filterTitle);
-    });
-};
-
 ///////////// adding filtering page items based on checked items on genre /////////
 
 const filterGenre = (data) => {
-    const checkedboxone = document.querySelector(
-        'input[type="checkbox"]:checked'
-    );
-
-    const filterGenre = data.filter((obj) => {
-        return obj.genre.includes(checkedboxone);
+    checkboxes1.addEventListener("click", (event) => {
+        const checkedbox = document.querySelector(
+            'input[type="checkbox"]:checked'
+        );
+        const filterGenre = data.filter((obj) => {
+            return obj.genre.includes(checkedbox);
+        });
+        display(filterGenre);
+        console.log(filterGenre);
     });
 };
+
+const filterYear = (data) => {
+    checkboxes2.addEventListener("click", (event) => {
+        // const selected = event.target.value;
+
+        const checkedbox = document.querySelector(
+            'input[type="checkbox"]:checked'
+        );
+
+        const filterYear = data.filter((obj) => {
+            return obj.year.includes(checkedbox);
+        });
+        display(filterYear);
+        console.log(filterYear);
+    });
+};
+
+///////////// Call functions /////////
+
+getMovieDataBase();
+displayDataType();
+clearFilters();
