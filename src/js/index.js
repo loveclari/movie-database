@@ -18,6 +18,9 @@ const test = document.getElementById("test");
 const filterLink = document.getElementById("clear");
 const radioMovie = document.getElementById("radiomovie");
 const radioBook = document.getElementById("radiobook");
+const allCheckboxes = document.querySelectorAll("input[type=checkbox]");
+const allReadios = document.querySelectorAll("input[type=radio]");
+const clear = document.getElementById("clear");
 
 ////////// fetch API data into the page ////////
 
@@ -190,16 +193,6 @@ const selectType = (typeList) => {
     console.log(radioBook);
 };
 
-///////////// adding filtering API for movie clear filters and reset page /////////
-
-const clearFilters = () => {
-    let link = "";
-    link += `
-    <input type="reset" role="button" value="clear filters" id="clear">`;
-
-    document.getElementById("filter_link").innerHTML = link;
-};
-
 ///////////// adding counting of checked genre items /////////
 
 checkboxes1.addEventListener("click", (event) => {
@@ -283,7 +276,19 @@ const filterYear = (data) => {
     });
 };
 
+///////////// adding filtering API for movie clear filters and reset page /////////
+
+clear.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const elements = document.getElementsByTagName("input");
+    for (let i = 0; i < elements.length; i++) {
+        if (elements[i].type == "text") {
+            return (elements[i].value = "");
+        }
+    }
+});
+
 ///////////// Call functions /////////
 
 getMovieDataBase();
-clearFilters();
