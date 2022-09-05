@@ -32,11 +32,13 @@ I used 'LESS' as opposed to 'SASS, mostly because this is the CSS tool I have us
 
 I also added a dynamic hint to what is searchable on the search bar by adding a placeholder
 
-I added focus to allow user to use tab to go through links on the page
+I added the most recent year dates to the top of the list - I believe that users when it comes to movies and books like to check the latest trends first.
+
+I added focus to allow user to use tab to go through links on the page.
 
 I have added a bit of accessibility by adding roles to html tags that were not too explicit and adding alt tags to images.
 
-I also fixed a broken link on the poster IMG array
+I also fixed a broken link on the poster IMG array.
 
 I did not use bootstrap but I used flexbox and also grid which mkaes things a bit easier and quicker to manage.
 
