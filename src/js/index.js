@@ -268,7 +268,7 @@ const filterGenre = (data) => {
 
 const filterYear = (data) => {
     checkboxes2.addEventListener("click", (event) => {
-        array = event.target.parentNode.textContent;
+        let array = event.target.parentNode.textContent;
         const filterYear = data.filter((obj) => {
             return array.includes(obj.year);
         });
