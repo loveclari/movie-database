@@ -177,7 +177,7 @@ checkboxes1.addEventListener("click", (event) => {
 
     const uncheckedbox = document.querySelector("#selectBox1>select>option");
 
-    counterHtml = "";
+    let counterHtml = "";
 
     const checkedbox = document.querySelectorAll(
         'input[type="checkbox"]:checked'
@@ -203,7 +203,7 @@ checkboxes1.addEventListener("click", (event) => {
 checkboxes2.addEventListener("click", () => {
     const uncheckedbox = document.querySelector("#selectBox2>select>option");
 
-    counterHtml = "";
+    let counterHtml = "";
 
     const checkedbox = document.querySelectorAll(
         'input[type="checkbox"]:checked'
@@ -228,11 +228,10 @@ checkboxes2.addEventListener("click", () => {
 
 const search = (posterList) => {
     searchBar.addEventListener("keyup", (event) => {
+        document.getElementById("search").placeholder = "Type name here..";
         const searchTitle = event.target.value.toLowerCase();
         const filterTitle = posterList.filter((obj) => {
             obj.title.toLowerCase().includes(searchTitle);
-        });
-        posterList.map((obj) => {
             document.getElementById("output").innerHTML += `  
         <li><img class="responsive" src="${filterTitle.poster}">
         <p> ${filterTitle.title} <span>(${filterTitle.year})</span></p>
