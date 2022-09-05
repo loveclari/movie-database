@@ -7,11 +7,11 @@ let data = [];
 const output = document.getElementById("output");
 const searchBar = document.getElementById("search");
 
-let selectBox1 = document.getElementById("selectBox1");
-let selectBox2 = document.getElementById("selectBox2");
-let checkboxes1 = document.getElementById("checkboxes1");
-let checkboxes2 = document.getElementById("checkboxes2");
-let select = document.getElementsByTagName("select");
+const selectBox1 = document.getElementById("selectBox1");
+const selectBox2 = document.getElementById("selectBox2");
+const checkboxes1 = document.getElementById("checkboxes1");
+const checkboxes2 = document.getElementById("checkboxes2");
+const select = document.getElementsByTagName("select");
 const movie = document.getElementById("output");
 const header = document.getElementById("header-container");
 const test = document.getElementById("test");
@@ -124,8 +124,8 @@ const selectGenre = (genreList) => {
 
     const genre = sortedGenre.map((genre) => {
         checkboxOptions += ` 
-                <label for="one">
-                <input id="checkbox" type="checkbox" />${genre}</label>
+                <label for="genre">
+                <input id="checkbox" value="genre" type="checkbox" />${genre}</label>
                 `;
 
         document.getElementById("checkboxes1").innerHTML = checkboxOptions;
@@ -133,6 +133,8 @@ const selectGenre = (genreList) => {
 };
 
 ///////////// adding filtering API for movie selection based on year /////////
+
+let yearList = [];
 
 const selectYear = (yearsList) => {
     if (!expanded) {
@@ -144,8 +146,6 @@ const selectYear = (yearsList) => {
     }
 
     let checkboxOptions = "";
-
-    let yearList = [];
 
     for (let i = 0; i < yearsList.length; i++) {
         if (yearList.indexOf(yearsList[i].year) === -1) {
@@ -260,11 +260,11 @@ checkboxes2.addEventListener("click", () => {
 
 const filterGenre = (data) => {
     checkboxes1.addEventListener("click", (event) => {
-        const checkedbox = document.querySelector(
-            'input[type="checkbox"]:checked'
-        );
+        const eventchecked = event.target.checked;
+        const eventtext = event.target.parentNode.textContent;
+
         const filterGenre = data.filter((obj) => {
-            return obj.genre.includes(checkedbox);
+            return obj.genre.includes(eventtext);
         });
         display(filterGenre);
         console.log(filterGenre);
@@ -273,22 +273,15 @@ const filterGenre = (data) => {
 
 const filterYear = (data) => {
     checkboxes2.addEventListener("click", (event) => {
-        // const selected = event.target.value;
-
-        const checkedbox = document.querySelector(
-            'input[type="checkbox"]:checked'
-        );
-
+        array = event.target.parentNode.textContent;
         const filterYear = data.filter((obj) => {
-            return obj.year.includes(year);
+            return array.includes(obj.year);
         });
         display(filterYear);
-        console.log(filterYear);
     });
 };
 
 ///////////// Call functions /////////
 
 getMovieDataBase();
-// displayDataType();
 clearFilters();
