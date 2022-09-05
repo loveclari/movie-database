@@ -167,6 +167,8 @@ const selectYear = (yearsList) => {
 ///////////// adding filtering API for movie selection based on type/////////
 
 const selectType = (typeList) => {
+    radioMovie.checked = true;
+    radioMovie.checked = false;
     radioMovie.addEventListener("click", () => {
         const searchType = "movie";
 
