@@ -18,6 +18,6 @@
 <li>Vanilla Javascript</li>
 </ul>
 <h2>Get Started:</h2>
-```node.js```
-```npm install```
-```npm start```
+<code>node.js</code>
+<code>npm install</code>
+<code>npm start</code
