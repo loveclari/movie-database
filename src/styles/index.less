@@ -93,7 +93,7 @@ h1 {
     padding-left: 15px;
     font-family: @fontMontserrat;
     color: #474747;
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     font-weight: 700;
   }
 
@@ -205,6 +205,8 @@ h1 {
 
       input {
         margin-right: 14px;
+        opacity: 1;
+        pointer-events: all;
       }
     }
 
@@ -221,13 +223,16 @@ h1 {
     .movie__search {
       right: 80px;
       position: absolute;
-      color: @textDark;
+      color: @lightGray;
       height: 100px;
 
       input {
         height: 30px;
         text-align: left;
         border-radius: 2px;
+        opacity: 1;
+        pointer-events: all;
+        border: 1px solid @mediumGray;
       }
 
       input[placeholder='&#xF002'] {
@@ -245,19 +250,32 @@ h1 {
 
     input {
       margin-right: 7px;
+      opacity: 1;
+      pointer-events: all;
     }
   }
 
   #filter_link {
     grid-area: d;
     justify-self: end;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    font-weight: 700;
-    font-family: @fontMontserrat;
+    opacity: 1;
+    pointer-events: all;
 
-    a {
+    button {
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: @fontMontserrat;
       color: @buttonColor;
+      opacity: 1;
+      pointer-events: all;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+    }
+
+    button:hover {
+      color: @textDark;
     }
   }
 
