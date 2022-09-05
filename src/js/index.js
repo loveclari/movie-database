@@ -43,6 +43,7 @@ const getMovieDataBase = async () => {
         selectBox2.addEventListener("mouseover", () => {
             selectYear(data.media);
         });
+        filterGenre(data.media);
         search(data.media);
         selectType(data.media);
     } catch (error) {
@@ -160,17 +161,19 @@ const selectType = (typeList) => {
     document.getElementById("radio_movie").innerHTML = checkboxRadio;
 };
 
+///////////// adding filtering API for movie clear filters and reset page /////////
+
 const clearFilters = () => {
     let link = "";
     link += `
-    <button type="reset" role="button" value="reset" id="clear" onClick="filterLinks()">clear filters</button>`;
+    <input type="reset" role="button" value="clear filters" id="clear">`;
 
     document.getElementById("filter_link").innerHTML = link;
 };
 
 clearFilters();
 
-///////////// adding filtering API for movie selection based on search /////////
+///////////// adding counting of checked genre items /////////
 
 checkboxes1.addEventListener("click", (event) => {
     const checkGenre = event.target.value;
@@ -200,6 +203,8 @@ checkboxes1.addEventListener("click", (event) => {
     uncheckedbox.innerHTML = counterHtml;
 });
 
+///////////// adding counting of checked year items /////////
+
 checkboxes2.addEventListener("click", () => {
     const uncheckedbox = document.querySelector("#selectBox2>select>option");
 
@@ -226,53 +231,32 @@ checkboxes2.addEventListener("click", () => {
     uncheckedbox.innerHTML = counterHtml;
 });
 
+///////////// adding a serach feature by title /////////
+
 const search = (posterList) => {
     searchBar.addEventListener("keyup", (event) => {
         document.getElementById("search").placeholder = "Type name here..";
         const searchTitle = event.target.value.toLowerCase();
         const filterTitle = posterList.filter((obj) => {
             obj.title.toLowerCase().includes(searchTitle);
-            document.getElementById("output").innerHTML += `  
-        <li><img class="responsive" src="${filterTitle.poster}">
-        <p> ${filterTitle.title} <span>(${filterTitle.year})</span></p>
-        <p> ${filterTitle.genre}</p>
-        </li>`;
+            //     document.getElementById("output").innerHTML += `
+            // <li><img class="responsive" src="${filterTitle.poster}">
+            // <p> ${filterTitle.title} <span>(${filterTitle.year})</span></p>
+            // <p> ${filterTitle.genre}</p>
+            // </li>`;
         });
+        getMovies(filterTitle);
     });
 };
 
-// const filterGenre = (event) => {
-//     const checkedboxone = document.querySelector(
-//         'input[type="checkbox"]:checked'
-//     );
+///////////// adding filtering page items based on checked items on genre /////////
 
-//     let checkedboxValue = checkedboxone.value;
+const filterGenre = (data) => {
+    const checkedboxone = document.querySelector(
+        'input[type="checkbox"]:checked'
+    );
 
-//     // const selectedBox = event.target.checked;
-
-//     const filterGenre = data.media.filter((obj) => {
-//         return obj.genre.includes(checkedboxValue);
-//     });
-// };
-
-// filterGenre();
-
-/////////////// reseting page ///////////
-
-const elements = document.querySelectorAll("input");
-
-for (let i = 0; i < elements.length; i++) {
-    elements[i].addEventListener("focus", (event) => {
-        event.target.parentNode.classList.add("focus");
+    const filterGenre = data.filter((obj) => {
+        return obj.genre.includes(checkedboxone);
     });
-}
-
-const filterLinks = () => {
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].value = "";
-    }
 };
-
-// adding focus for tab navigation
-
-filterLinks();
