@@ -283,7 +283,7 @@ clear.addEventListener("click", (event) => {
 
     const elements = document.getElementsByTagName("input");
     for (let i = 0; i < elements.length; i++) {
-        if (elements[i].type == "text") {
+        if (elements[i].type == "checkbox" || elements[i].type == "radio") {
             return (elements[i].value = "");
         }
     }
