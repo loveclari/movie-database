@@ -6,7 +6,6 @@ let data = [];
 
 const output = document.getElementById("output");
 const searchBar = document.getElementById("search");
-console.log(searchBar);
 
 let selectBox1 = document.getElementById("selectBox1");
 let selectBox2 = document.getElementById("selectBox2");
@@ -155,25 +154,16 @@ const selectType = (typeList) => {
 
     checkboxRadio += `
                 <label for="movie">
-                <input name="typeofdata" type="radio" id="radiomovie" />Movies</label>
+                <input name="movie" type="radio" id="radiomovie" />Movies</label>
                 <label for="book">
-                <input name="typeofdata" type="radio" id="radiomovie" />Books</label>`;
+                <input name="book" type="radio" id="radiomovie" />Books</label>`;
     document.getElementById("radio_movie").innerHTML = checkboxRadio;
 };
 
-const filterLinks = () => {
-    const elements = document.getElementsByTagName("input");
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].value = "";
-    }
-};
-
-filterLinks();
-
 const clearFilters = () => {
-    link = "";
+    let link = "";
     link += `
-    <a id="clear" onClick="filterLinks()">clear filters</a>`;
+    <button type="reset" role="button" value="reset" id="clear" onClick="filterLinks()">clear filters</button>`;
 
     document.getElementById("filter_link").innerHTML = link;
 };
@@ -259,11 +249,31 @@ const search = (posterList) => {
 
 //     let checkedboxValue = checkedboxone.value;
 
-//     const selectedBox = event.target.checked;
+//     // const selectedBox = event.target.checked;
 
 //     const filterGenre = data.media.filter((obj) => {
-//         return obj.genre.includes(selectedBox);
+//         return obj.genre.includes(checkedboxValue);
 //     });
 // };
 
 // filterGenre();
+
+/////////////// reseting page ///////////
+
+const elements = document.querySelectorAll("input");
+
+for (let i = 0; i < elements.length; i++) {
+    elements[i].addEventListener("focus", (event) => {
+        event.target.parentNode.classList.add("focus");
+    });
+}
+
+const filterLinks = () => {
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].value = "";
+    }
+};
+
+// adding focus for tab navigation
+
+filterLinks();
