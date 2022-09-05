@@ -16,7 +16,8 @@ const movie = document.getElementById("output");
 const header = document.getElementById("header-container");
 const test = document.getElementById("test");
 const filterLink = document.getElementById("clear");
-const radioMovie = document.getElementById("radio_movie");
+const radioMovie = document.getElementById("radiomovie");
+const radioBook = document.getElementById("radiobook");
 
 ////////// fetch API data into the page ////////
 
@@ -165,31 +166,26 @@ const selectYear = (yearsList) => {
 
 ///////////// adding filtering API for movie selection based on type/////////
 
-const displayDataType = () => {
-    let checkboxRadio = "";
-
-    checkboxRadio += `
-    <label for="movie">
-    <input name="movie" type="radio" id="radiomovie" />Movies</label>
-    <label for="book">
-    <input name="book" type="radio" id="radiomovie" />Books</label>`;
-    document.getElementById("radio_movie").innerHTML = checkboxRadio;
-};
-
 const selectType = (typeList) => {
-    radioMovie.addEventListener("click", (event) => {
-        const searchType = event.target.checked;
+    radioMovie.addEventListener("click", () => {
+        const searchType = "movie";
 
         const movieType = typeList.filter((obj) => {
-            if (searchType == "movies") {
-                return obj.type.includes("movie");
-            }
-            if (searchType == "books") {
-                return obj.type.includes("book");
-            }
+            return obj.type.includes(searchType);
         });
         display(movieType);
+        console.log(movieType);
     });
+    radioBook.addEventListener("click", (event) => {
+        const searchType = "book";
+
+        const bookType = typeList.filter((obj) => {
+            return obj.type.includes(searchType);
+        });
+        display(bookType);
+        console.log(bookType);
+    });
+    console.log(radioBook);
 };
 
 ///////////// adding filtering API for movie clear filters and reset page /////////
@@ -284,7 +280,7 @@ const filterYear = (data) => {
         );
 
         const filterYear = data.filter((obj) => {
-            return obj.year.includes(checkedbox);
+            return obj.year.includes(year);
         });
         display(filterYear);
         console.log(filterYear);
@@ -294,5 +290,5 @@ const filterYear = (data) => {
 ///////////// Call functions /////////
 
 getMovieDataBase();
-displayDataType();
+// displayDataType();
 clearFilters();
